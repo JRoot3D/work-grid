@@ -74,10 +74,6 @@ const isColumn = (value: unknown): value is Column =>
   Array.isArray(value.taskIds) &&
   value.taskIds.every((id) => typeof id === 'string');
 
-export function serializeBoard(board: Board): string {
-  return JSON.stringify(board, null, 2);
-}
-
 export function parseBoard(json: string): Board {
   const parsed: unknown = JSON.parse(json);
 

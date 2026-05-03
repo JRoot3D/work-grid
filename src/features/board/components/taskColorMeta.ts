@@ -30,10 +30,3 @@ export const taskColorTintValues: Record<TaskColor, string> = {
   purple: '#f4f2ff',
 };
 
-export function getTaskColorValue(color: TaskColor) {
-  return taskColorValues[color];
-}
-
-export function getTaskColorTintValue(color: TaskColor) {
-  return taskColorTintValues[color];
-}

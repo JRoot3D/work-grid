@@ -2,7 +2,7 @@ import { Bookmark, Check, GitBranch, ListChecks, MessageSquare } from 'lucide-re
 import type { CSSProperties } from 'react';
 import type { Task } from '../../../domain/board';
 import { PriorityIcon } from './PriorityIcon';
-import { getTaskColorTintValue, getTaskColorValue } from './taskColorMeta';
+import { taskColorTintValues, taskColorValues } from './taskColorMeta';
 
 type TaskCardProps = {
   task: Task;
@@ -14,8 +14,8 @@ export function TaskCard({ task, onOpen, onDropBefore }: TaskCardProps) {
   const completedChecklistItems = task.checklist.filter((item) => item.completed).length;
   const issueKey = `WG-${task.id.slice(0, 4).toUpperCase()}`;
   const style = {
-    '--task-color': getTaskColorValue(task.color),
-    '--task-color-tint': getTaskColorTintValue(task.color),
+    '--task-color': taskColorValues[task.color],
+    '--task-color-tint': taskColorTintValues[task.color],
   } as CSSProperties;
 
   const handleDragStart = (event: React.DragEvent<HTMLButtonElement>) => {

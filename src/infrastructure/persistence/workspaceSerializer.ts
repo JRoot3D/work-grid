@@ -1,5 +1,5 @@
-import { createEmptyWorkspace, createProject, type Project, type Workspace } from '../../domain/board';
-import { parseBoard, serializeBoard } from './boardSerializer';
+import { createProject, type Project, type Workspace } from '../../domain/board';
+import { parseBoard } from './boardSerializer';
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -73,9 +73,4 @@ export function workspaceFromLegacyBoardJson(json: string): Workspace {
     activeProjectId: project.id,
     projects: [project],
   };
-}
-
-export function exportBoardFromWorkspace(workspace: Workspace) {
-  const project = workspace.projects.find((item) => item.id === workspace.activeProjectId) ?? workspace.projects[0];
-  return project ? serializeBoard(project.board) : serializeBoard(createEmptyWorkspace().projects[0]!.board);
 }

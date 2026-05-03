@@ -62,11 +62,6 @@ type CreateProjectPayload = {
   name: string;
 };
 
-type RenameProjectPayload = {
-  projectId: string;
-  name: string;
-};
-
 const getActiveProject = (state: Workspace) =>
   state.projects.find((project) => project.id === state.activeProjectId) ?? state.projects[0];
 
@@ -93,14 +88,6 @@ const boardSlice = createSlice({
       const project = createProject(name);
       state.projects.unshift(project);
       state.activeProjectId = project.id;
-    },
-    projectRenamed: (state, action: PayloadAction<RenameProjectPayload>) => {
-      const project = state.projects.find((item) => item.id === action.payload.projectId);
-      const name = action.payload.name.trim();
-
-      if (project && name) {
-        project.name = name;
-      }
     },
     activeProjectChanged: (state, action: PayloadAction<string>) => {
       if (state.projects.some((project) => project.id === action.payload)) {
@@ -144,22 +131,18 @@ const boardSlice = createSlice({
       updateActiveBoard(state, (board) =>
         deleteChecklistItemUseCase(board, action.payload.taskId, action.payload.itemId),
       ),
-    boardImported: (state, action: PayloadAction<Board>) =>
-      updateActiveBoard(state, () => action.payload),
     workspaceImported: (_state, action: PayloadAction<Workspace>) => action.payload,
   },
 });
 
 export const {
   activeProjectChanged,
-  boardImported,
   checklistItemAdded,
   checklistItemDeleted,
   checklistItemToggled,
   commentAdded,
   projectCreated,
   projectDeleted,
-  projectRenamed,
   taskCreated,
   taskDeleted,
   taskMoved,
