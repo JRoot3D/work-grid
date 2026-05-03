@@ -70,7 +70,6 @@ const updateActiveBoard = (state: Workspace, recipe: (board: Board) => Board) =>
 
   if (activeProject) {
     activeProject.board = recipe(activeProject.board);
-    state.activeProjectId = activeProject.id;
   }
 };
 
@@ -131,7 +130,12 @@ const workspaceSlice = createSlice({
       updateActiveBoard(state, (board) =>
         deleteChecklistItemUseCase(board, action.payload.taskId, action.payload.itemId),
       ),
-    workspaceImported: (_state, action: PayloadAction<Workspace>) => action.payload,
+    workspaceImported: (_state, action: PayloadAction<Workspace>) => {
+      if (action.payload.projects.length === 0) {
+        return createEmptyWorkspace();
+      }
+      return action.payload;
+    },
   },
 });
 

@@ -109,20 +109,41 @@ export function moveTask(board: Board, taskId: string, targetColumnId: ColumnId,
     return board;
   }
 
-  const cleanColumns = board.columns.map((column) => ({
-    ...column,
-    taskIds: column.taskIds.filter((id) => id !== taskId),
-  }));
+  const safeIndex = Math.max(0, targetIndex);
 
-  const columns = cleanColumns.map((column) => {
-    if (column.id !== targetColumnId) {
-      return column;
+  const columns = board.columns.map((column) => {
+    if (column.id === targetColumnId) {
+      const originalIds = column.taskIds;
+      const newTaskIds: string[] = [];
+      let inserted = false;
+
+      for (const [i, id] of originalIds.entries()) {
+        if (id === taskId) {
+          continue;
+        }
+        if (!inserted && i === safeIndex) {
+          newTaskIds.push(taskId);
+          inserted = true;
+        }
+        newTaskIds.push(id);
+      }
+
+      if (!inserted) {
+        // targetIndex is past the end (or the column was empty): append.
+        newTaskIds.push(taskId);
+      }
+
+      return { ...column, taskIds: newTaskIds };
     }
 
-    const nextTaskIds = [...column.taskIds];
-    nextTaskIds.splice(Math.max(0, Math.min(targetIndex, nextTaskIds.length)), 0, taskId);
+    if (task.columnId === column.id) {
+      return {
+        ...column,
+        taskIds: column.taskIds.filter((id) => id !== taskId),
+      };
+    }
 
-    return { ...column, taskIds: nextTaskIds };
+    return column;
   });
 
   return {

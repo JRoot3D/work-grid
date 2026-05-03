@@ -77,11 +77,12 @@ export function BoardPage() {
     const blob = exportWorkspaceAsBlob(workspace);
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-
     link.href = url;
     link.download = `work-grid-workspace-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
     link.click();
-    URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 0);
   };
 
   const importData = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -206,7 +207,7 @@ export function BoardPage() {
           onConfirm={deleteActiveProject}
         />
       ) : null}
-      {selectedTask ? <TaskModal task={selectedTask} onClose={() => setSelectedTaskId(null)} /> : null}
+      {selectedTask ? <TaskModal key={selectedTask.id} task={selectedTask} onClose={() => setSelectedTaskId(null)} /> : null}
     </main>
   );
 }

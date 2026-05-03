@@ -22,7 +22,13 @@ export function createLocalWorkspaceRepository(): WorkspaceRepository {
 
       if (legacyBoard) {
         try {
-          return workspaceFromLegacyBoardJson(legacyBoard);
+          const migrated = workspaceFromLegacyBoardJson(legacyBoard);
+          try {
+            localStorage.removeItem(legacyBoardStorageKey);
+          } catch {
+            // ignore — retry next reload
+          }
+          return migrated;
         } catch {
           return createEmptyWorkspace();
         }
