@@ -12,7 +12,7 @@ import {
   selectWorkspace,
   taskMoved,
   workspaceImported,
-} from '../state/boardSlice';
+} from '../state/workspaceSlice';
 import { ColumnView } from './ColumnView';
 import { ConfirmModal } from './ConfirmModal';
 import { CreateProjectModal } from './CreateProjectModal';

@@ -10,7 +10,7 @@ import {
   taskDeleted,
   taskMovedToAdjacentColumn,
   taskUpdated,
-} from '../state/boardSlice';
+} from '../state/workspaceSlice';
 import { ConfirmModal } from './ConfirmModal';
 import { PriorityIcon } from './PriorityIcon';
 import { TaskColorPicker } from './TaskColorPicker';

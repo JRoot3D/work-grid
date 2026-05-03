@@ -2,7 +2,7 @@ import { Plus, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { priorities, type Priority, type TaskColor } from '../../../domain/board';
-import { taskCreated } from '../state/boardSlice';
+import { taskCreated } from '../state/workspaceSlice';
 import { PriorityIcon } from './PriorityIcon';
 import { TaskColorPicker } from './TaskColorPicker';
 import { formatPriority } from './priorityMeta';

@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
-import { projectCreated } from '../state/boardSlice';
+import { projectCreated } from '../state/workspaceSlice';
 
 type CreateProjectModalProps = {
   onClose(): void;

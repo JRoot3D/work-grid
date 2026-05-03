@@ -74,7 +74,7 @@ const updateActiveBoard = (state: Workspace, recipe: (board: Board) => Board) =>
   }
 };
 
-const boardSlice = createSlice({
+const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: createEmptyWorkspace(),
   reducers: {
@@ -149,9 +149,9 @@ export const {
   taskMovedToAdjacentColumn,
   taskUpdated,
   workspaceImported,
-} = boardSlice.actions;
+} = workspaceSlice.actions;
 
-export const boardReducer = boardSlice.reducer;
+export const workspaceReducer = workspaceSlice.reducer;
 
 export const selectWorkspace = (state: RootState) => state.workspace;
 export const selectProjects = (state: RootState) => state.workspace.projects;

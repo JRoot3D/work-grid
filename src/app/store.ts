@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createLocalWorkspaceRepository } from '../infrastructure/persistence/localWorkspaceRepository';
-import { boardReducer } from '../features/board/state/boardSlice';
+import { workspaceReducer } from '../features/board/state/workspaceSlice';
 
 const workspaceRepository = createLocalWorkspaceRepository();
 
 export const store = configureStore({
   reducer: {
-    workspace: boardReducer,
+    workspace: workspaceReducer,
   },
   preloadedState: {
     workspace: workspaceRepository.load(),
