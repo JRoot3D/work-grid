@@ -2,7 +2,7 @@ import { Download, Plus, Search, Trash2, Upload } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import type { ColumnId, Task } from '../../../domain/board';
-import { parseWorkspace, serializeWorkspace } from '../../../infrastructure/persistence/workspaceSerializer';
+import { exportWorkspaceAsBlob, importWorkspaceFromText } from '../../../application/workspaceUseCases';
 import {
   activeProjectChanged,
   projectDeleted,
@@ -74,7 +74,7 @@ export function BoardPage() {
   const hasSearchResults = !hasSearchQuery || filteredTaskIds.size > 0;
 
   const exportData = () => {
-    const blob = new Blob([serializeWorkspace(workspace)], { type: 'application/json' });
+    const blob = exportWorkspaceAsBlob(workspace);
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
 
@@ -92,7 +92,7 @@ export function BoardPage() {
     }
 
     try {
-      dispatch(workspaceImported(parseWorkspace(await file.text())));
+      dispatch(workspaceImported(importWorkspaceFromText(await file.text())));
       setSelectedTaskId(null);
       setImportError('');
     } catch (error) {
